@@ -1427,46 +1427,6 @@ div .logo-inline img {
   font-size: 0.95rem;
 }
 
-.contact-hero .col.mail .label {
-  color: #6b7c86;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.contact-hero .col.mail .ico-mail {
-  display: inline-grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  color: var(--brand-2, #0d6a86);
-}
-
-.contact-hero .col.mail .address {
-  margin: 0.25rem 0 0.25rem;
-  line-height: 1;
-}
-
-.contact-hero .col.mail .address a {
-  color: inherit;
-  text-decoration: none;
-}
-
-.contact-hero .col.mail .address strong {
-  font-size: clamp(1.1rem, 3vw, 1.6rem);
-  color: var(--brand-2, #0d6a86);
-  letter-spacing: 0.02em;
-}
-
-.contact-hero .col.mail .time {
-  color: #6b7c86;
-  margin: 0.15rem 0 0;
-  font-size: 0.95rem;
-}
-
 .contact-hero .col.line p {
   margin: 0.2rem 0 0.6rem;
   color: #33424d;
@@ -1632,5 +1592,71 @@ div .logo-inline img {
   }
   .contact-form .grid {
     grid-template-columns: 1fr;
+  }
+}
+
+.contact-hero .col.mail .label {
+  color: #6b7c86;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.contact-hero .col.mail .ico-mail {
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  color: var(--brand-2, #0d6a86);
+}
+
+.contact-hero .col.mail .address {
+  margin: 0.25rem 0 0.25rem;
+  line-height: 1;
+}
+
+.contact-hero .col.mail .address a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.contact-hero .col.mail .address strong {
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  color: var(--brand-2, #0d6a86);
+  letter-spacing: 0.02em;
+}
+
+.contact-hero .col.mail .time {
+  color: #6b7c86;
+  margin: 0.15rem 0 0;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 768px) {
+  .contact-hero .col.mail .label {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .contact-hero .col.mail .ico-mail {
+    flex-shrink: 0;
+  }
+
+  .contact-hero .col.mail .address strong {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    display: block;
+    text-align: center;
+  }
+
+  .contact-hero .col.mail {
+    padding: 1rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 }
