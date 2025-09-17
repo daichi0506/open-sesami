@@ -10,8 +10,8 @@
     <!-- top bar & nav -->
     <div class="topbar">
       <div class="contactbar">
-        <span class="muted">お客様サポートダイヤル</span>
-        <span class="tel">TEL.123-4567-8901</span>
+        <!-- <span class="muted">お客様サポートダイヤル</span>
+        <span class="tel">TEL.123-4567-8901</span> -->
         <a class="btn" href="#contact">お問い合わせ</a>
       </div>
       <header class="nav">
@@ -19,7 +19,7 @@
           <img class="brand-logo" src="images/Open-Sesameロゴ.png" alt="" />
           <!-- <span class="brand-name">Open Sesame</span> -->
         </div>
-        <!-- <nav>
+        <nav>
           <button
             class="menu-toggle"
             aria-label="メニュー"
@@ -32,12 +32,12 @@
           </button>
           <ul id="menu">
             <li><a href="#top">TOP</a></li>
-            <li><a href="#products">製品案内</a></li>
-            <li><a href="#example">導入実績</a></li>
-            <li><a href="#flow">導入の流れ</a></li>
-            <li><a href="#faq">よくある質問</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#products">Product</a></li>
+            <li><a href="#works">Works</a></li>
+            <li><a href="#contact">Contact</a></li>
           </ul>
-        </nav> -->
+        </nav>
       </header>
       <div class="nav-overlay" hidden></div>
     </div>
@@ -65,12 +65,23 @@
             loading="lazy"
             decoding="async"
           />
+
+          <div class="hero-ui" aria-hidden="false">
+            <button class="hero-btn hero-prev" type="button" aria-label="前の画像">‹</button>
+            <div class="hero-dots" role="tablist" aria-label="ヒーロー画像選択"></div>
+            <button class="hero-btn hero-next" type="button" aria-label="次の画像">›</button>
+          </div>
+
+          <div class="hero-progress" aria-hidden="true"><span></span></div>
         </div>
         <div class="catch">
-          <div class="catch-card">
-            <h1>「もう、カギはいらない！」</h1>
+          <div class="catch-card catch-animated" data-catch>
+            <h1 class="fx-title">「もう、カギはいらない！」</h1>
             <p class="kicker">
-              オープンセサミの顔認証機器“セサミシリーズ”と<br />指紋認証機“セサミタッチシリーズ”で、<br />これまでの物理カギでは考えられなかった<br />別次元の利便性・セキュリティ性を手に。
+              <span class="fx-line">オープンセサミの顔認証機器“セサミシリーズ”と</span><br>
+              <span class="fx-line">指紋認証機“セサミタッチシリーズ”で、</span><br>
+              <span class="fx-line">これまでの物理カギでは考えられなかった</span><br>
+              <span class="fx-line">別次元の<span class="fx-em">利便性・セキュリティ性</span>を手に。</span>
             </p>
           </div>
         </div>
@@ -145,7 +156,7 @@
     </section>
 
     <!--  News  -->
-    <section class="news" aria-label="新着情報">
+    <section class="news" aria-label="新着情報" id="news">
       <div class="news-inner">
         <h2>新着情報</h2>
         <p class="lead">News</p>
@@ -260,7 +271,7 @@
 
         <!-- YouTube 2カラム -->
         <div class="prod-videos">
-          <div class="video">
+          <!-- <div class="video">
             <div class="ratio">
               <iframe
                 width="560"
@@ -273,7 +284,7 @@
                 allowfullscreen
               ></iframe>
             </div>
-          </div>
+          </div> -->
           <div class="video">
             <div class="ratio">
               <iframe
@@ -351,10 +362,10 @@
               <span class="logo-inline">
                 <img src="images/Open-Sesameロゴ.png" alt="Open-Sesame" />
               </span>
-              の３つの特徴
+              の3つの特徴
             </div>
             <p>
-              創業２３年という業界屈指のノウハウを活かし、世界最高のスペックを実現。これからも世界一の便利・安全をお届けします。
+              創業23年という業界屈指のノウハウを活かし、世界最高のスペックを実現。これからも世界一の便利・安全をお届けします。
             </p>
           </div>
           <!-- <div class="feat-img">
@@ -383,7 +394,7 @@
             <h5>正確</h5>
             <p class="lead">認証率 世界最高99.99999%以上</p>
             <p>
-              一度の読み取りで正確に認証します。認証率が低い製品はできないことがあります。
+              一度の読み取りで確実に認証。世界最高水準の精度により、誤認証や認証エラーの心配を極限まで排除しました。
             </p>
           </div>
           <div class="feat-card">
@@ -422,7 +433,7 @@
               <img src="images/feat-img04.png" alt="" />
             </div>
             <h5>世界トップの個人特定率</h5>
-            <p>オープンセサミの認証率は世界最高99.99999% 認証率が低いと登録していない生体を認証してしまう可能性が高まります。</p>
+            <p>オープンセサミは世界最高水準の認証率99.99999%以上を誇ります。圧倒的な精度により、未登録生体の誤認証リスクを極限まで低減し、安心と信頼を提供します。</p>
           </div>
           <div class="feat-card">
             <div class="icon" aria-hidden="true">
@@ -447,7 +458,7 @@
     </section>
 
     <!-- works -->
-    <section class="works" aria-label="Works" id="example">
+    <section class="works" aria-label="Works" id="works">
       <div class="works-inner">
         <div class="works-head">
           <div class="works-text">
@@ -528,7 +539,7 @@
           </div>
         </div>
 
-        <div class="tv">
+        <!-- <div class="tv">
           <h3 class="tv-title">TV番組・ドラマ多数出演!</h3>
           <div class="tv-grid">
             <a href="#tv-1" class="tv-card">
@@ -543,14 +554,14 @@
             <a href="#tv-4" class="tv-card">
               <img src="images/tv-img04.webp" alt="">
             </a>
-          </div>
+          </div> -->
         </div>
       </div>
     </section>
 
     <!-- <div id="tv-1" class="lightbox" role="dialog" aria-label="番組詳細">
       <div class="panel">
-        <a href="#close" class="close" aria-label="閉じる">×</a>
+        <a href="#close" class="close" aria-label="閉じる">✕</a>
         <img src="images/tv-img01.jpg" alt="">
         <div class="info">
           <h4>マツコ会議</h4>
@@ -560,7 +571,7 @@
     </div>
     <div id="tv-2" class="lightbox" role="dialog" aria-label="番組詳細">
       <div class="panel">
-        <a href="#close" class="close" aria-label="閉じる">×</a>
+        <a href="#close" class="close" aria-label="閉じる">✕</a>
         <img src="images/tv-img02.webp" alt="">
         <div class="info">
           <h4>アイムホーム</h4>
@@ -570,7 +581,7 @@
     </div>
     <div id="tv-3" class="lightbox" role="dialog" aria-label="番組詳細">
       <div class="panel">
-        <a href="#close" class="close" aria-label="閉じる">×</a>
+        <a href="#close" class="close" aria-label="閉じる">✕</a>
         <img src="images/tv-img03.jpg" alt="">
         <div class="info">
           <h4>渡る世間は鬼ばかり</h4>
@@ -580,7 +591,7 @@
     </div>
     <div id="tv-4" class="lightbox" role="dialog" aria-label="番組詳細">
       <div class="panel">
-        <a href="#close" class="close" aria-label="閉じる">×</a>
+        <a href="#close" class="close" aria-label="閉じる">✕</a>
         <img src="images/tv-img04.webp" alt="">
         <div class="info">
           <h4>BORDER</h4>
@@ -597,12 +608,19 @@
           <div class="summary">
             <h2>お問い合わせ</h2>
             <div class="cols">
-              <div class="col tel">
-                <p class="label">TEL.</p>
-                <p class="number">
-                  <a href="/"><strong>012-345-6789</strong></a>
+              <div class="col mail">
+                <p class="label">
+                  <span class="ico-mail" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                      <path d="M3.5 6.75A1.75 1.75 0 0 1 5.25 5h13.5A1.75 1.75 0 0 1 20.5 6.75v10.5A1.75 1.75 0 0 1 18.75 19H5.25A1.75 1.75 0 0 1 3.5 17.25V6.75Z" stroke="currentColor" stroke-width="1.8" />
+                      <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </span>
+                  MAIL
                 </p>
-                <p class="time">受付時間：平日 9:00 - 17:00</p>
+                <p class="address">
+                  <a href="mailto:opensesame.hokkaido@gmail.com"><strong>opensesame.hokkaido@gmail.com</strong></a>
+                </p>
               </div>
               <div class="col line">
                 <p>LINEでのお問い合わせも受付中</p>
@@ -621,8 +639,6 @@
                   <label><input type="radio" name="item" value="purchase" required> ご注文（購入）</label>
                   <label><input type="radio" name="item" value="subscription" required> ご注文（サブスク）</label>
                   <label><input type="radio" name="item" value="product" required> 製品に関するご質問</label>
-                  <label><input type="radio" name="item" value="material" required> 資料請求</label>
-                  <label><input type="radio" name="item" value="quote" required> 見積もり依頼</label>
                   <label><input type="radio" name="item" value="construction" required> 設置工事に関するご質問</label>
                   <label><input type="radio" name="item" value="agency" required> 販売代理店について</label>
                   <label><input type="radio" name="item" value="other" required> その他</label>
@@ -666,6 +682,17 @@
               </div>
             </div>
 
+            <div class="grid survey-dates">
+              <div class="form-group">
+                <label for="survey-date-1">現場調査日程　第一希望日</label>
+                <input type="date" id="survey-date-1" name="survey_date_1" aria-describedby="survey-hint">
+              </div>
+              <div class="form-group">
+                <label for="survey-date-2">現場調査日程　第二希望日</label>
+                <input type="date" id="survey-date-2" name="survey_date_2" aria-describedby="survey-hint">
+              </div>
+            </div>
+
             <div class="grid install-dates">
               <div class="form-group">
                 <label for="install-date-1">設置工事希望日程　第一希望日</label>
@@ -674,10 +701,6 @@
               <div class="form-group">
                 <label for="install-date-2">設置工事希望日程　第二希望日</label>
                 <input type="date" id="install-date-2" name="install_date_2" aria-describedby="install-hint">
-              </div>
-              <div class="form-group">
-                <label for="install-date-3">設置工事希望日程　第三希望日</label>
-                <input type="date" id="install-date-3" name="install_date_3" aria-describedby="install-hint">
               </div>
               <p id="install-hint" class="hint">※ 本日から3週間以降の候補日をご入力ください。</p>
             </div>
@@ -712,7 +735,7 @@
       </div>
     </section>
 
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
   </body>
 </html>
