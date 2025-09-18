@@ -1660,3 +1660,11 @@ div .logo-inline img {
     box-sizing: border-box;
   }
 }
+
+/* ------------------------------0918 */
+@media (max-width: 600px) {
+  .hero .kicker br,
+  .hero h1 br {
+    display: none;
+  }
+}
