@@ -1662,9 +1662,12 @@ div .logo-inline img {
 }
 
 /* ------------------------------0918 */
-@media (max-width: 600px) {
-  .hero .kicker br,
-  .hero h1 br {
-    display: none;
+.fx-line {
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .fx-line {
+    display: inline;
   }
 }
