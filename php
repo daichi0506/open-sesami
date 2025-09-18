@@ -254,7 +254,7 @@ if (wants_json()) {
 if ($sent && REDIRECT_SUCCESS) { header('Location: '.REDIRECT_SUCCESS); exit; }
 if (!$sent && REDIRECT_ERROR)  { header('Location: '.REDIRECT_ERROR);  exit; }
 
-// 簡易サンクス（テンプレがあるならリダイレクトを設定してね）
+// 簡易サンクス
 echo '<!doctype html><meta charset="utf-8"><title>送信完了</title><body style="font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;line-height:1.6;padding:2rem">';
 if ($sent) {
   echo '<h1>送信ありがとうございました。</h1><p>担当者より折り返しご連絡いたします。</p>';
