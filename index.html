@@ -3,743 +3,685 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Open Sesame | ランディングベース</title>
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- top bar & nav -->
-    <div class="topbar">
-      <div class="contactbar">
-        <!-- <span class="muted">お客様サポートダイヤル</span>
-        <span class="tel">TEL.123-4567-8901</span> -->
-        <a class="btn" href="#contact">お問い合わせ</a>
-      </div>
-      <header class="nav">
-        <div class="brand">
-          <img class="brand-logo" src="images/Open-Sesameロゴ.png" alt="" />
-          <!-- <span class="brand-name">Open Sesame</span> -->
-        </div>
-        <nav>
-          <button
-            class="menu-toggle"
-            aria-label="メニュー"
-            aria-controls="menu"
-            aria-expanded="false"
-          >
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-          </button>
-          <ul id="menu">
-            <li><a href="#top">TOP</a></li>
-            <li><a href="#news">News</a></li>
-            <li><a href="#products">Product</a></li>
-            <li><a href="#works">Works</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </nav>
-      </header>
-      <div class="nav-overlay" hidden></div>
-    </div>
-
-    <!-- hero -->
-    <section class="hero" id="top">
-      <div class="hero-inner">
-        <div class="hero-image" id="hero-left">
+    <header class="header">
+      <div class="container nav" role="navigation" aria-label="メインナビ">
+        <a class="brand" href="#top">
           <img
-            src="images/hero-img1.PNG"
-            alt=""
-            class="active"
+            class="tone-invert"
+            src="img/Open-Sesameロゴ.png"
+            alt="オープンセサミ"
+            width="156"
+            height="28"
             decoding="async"
             fetchpriority="high"
           />
-          <img
-            src="images/hero-img2.PNG"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-          <img
-            src="images/hero-img3.PNG"
-            alt=""
-            loading="lazy"
-            decoding="async"
-          />
-
-          <div class="hero-ui" aria-hidden="false">
-            <button class="hero-btn hero-prev" type="button" aria-label="前の画像">‹</button>
-            <div class="hero-dots" role="tablist" aria-label="ヒーロー画像選択"></div>
-            <button class="hero-btn hero-next" type="button" aria-label="次の画像">›</button>
-          </div>
-
-          <div class="hero-progress" aria-hidden="true"><span></span></div>
-        </div>
-        <div class="catch">
-          <div class="catch-card catch-animated" data-catch>
-            <h1 class="fx-title">「もう、カギはいらない！」</h1>
-            <p class="kicker">
-              <span class="fx-line">オープンセサミの顔認証機器“セサミシリーズ”と</span>
-              <span class="fx-line">指紋認証機“セサミタッチシリーズ”で、</span>
-              <span class="fx-line">これまでの物理カギでは考えられなかった</span>
-              <span class="fx-line">別次元の<span class="fx-em">利便性・セキュリティ性</span>を手に。</span>
-            </p>
-          </div>
+        </a>
+        <nav class="menu" aria-label="menu">
+          <a href="#">募集要項</a>
+          <a href="#">実績紹介</a>
+          <a href="#">FAQ</a>
+          <a href="#">お問い合わせ</a>
+        </nav>
+        <button
+          class="hamb"
+          aria-label="メニューを開閉"
+          aria-controls="drawer"
+          aria-expanded="false"
+        >
+          <span></span>
+        </button>
+      </div>
+      <div id="drawer" class="drawer" hidden>
+        <div class="inner container">
+          <a href="#">募集要項</a>
+          <a href="#">実績紹介</a>
+          <a href="#">FAQ</a>
+          <a href="#">お問い合わせ</a>
         </div>
       </div>
-    </section>
+    </header>
 
-    <!-- clients -->
-    <section class="clients">
-      <div class="clients-track" aria-label="off">
-        <div class="logo">
-          <img src="images/ntt-logo.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/711.png" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/win.png" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/microsoft.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/canon.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/kao.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/intel.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/toyoko.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/subaru.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/johnsonjohnson_edited.webp" alt="" />
-        </div>
-        <!-- seamless loop -->
-        <div class="logo">
-          <img src="images/ntt-logo.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/711.png" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/win.png" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/microsoft.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/canon.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/kao.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/intel.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/toyoko.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/subaru.webp" alt="" />
-        </div>
-        <div class="logo">
-          <img src="images/johnsonjohnson_edited.webp" alt="" />
-        </div>
+    <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+    <!-- Hero -->
+    <section class="hero" id="top">
+      <div class="bg" aria-hidden="true">
+        <div class="glow g1" data-parallax="-0.12"></div>
+        <div class="glow g2" data-parallax="0.10"></div>
+        <div class="glow g3" data-parallax="0.18"></div>
+        <div class="particles" id="particles"></div>
       </div>
-    </section>
-
-    <!--  News  -->
-    <section class="news" aria-label="新着情報" id="news">
-      <div class="news-inner">
-        <h2>新着情報</h2>
-        <p class="lead">News</p>
-        <div class="news-cards">
-          <div class="news-card">
-            <img
-              src="images/news-img01.jpg"
-              alt="ニュース1"
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="news-card-body">
-              <div class="date">2025.08.02</div>
-              <h3>【お知らせ】公式アンバサダーに「ヒカル」が就任！</h3>
-            </div>
-          </div>
-          <div class="news-card">
-            <img
-              src="images/news-img02.png"
-              alt="ニュース2"
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="news-card-body">
-              <div class="date">2025.08.02</div>
-              <h3>【お知らせ】Nontitle Season5公式スポンサーに就任</h3>
-            </div>
-          </div>
-          <div class="news-card">
-            <img
-              src="images/news-img03.jpg"
-              alt="ニュース3"
-              loading="lazy"
-              decoding="async"
-            />
-            <div class="news-card-body">
-              <div class="date">2025.05.03</div>
-              <h3>【お知らせ】JRAホースショー メインスポンサーに就任</h3>
-            </div>
+      <div class="container">
+        <div class="lead">
+          <h1>あなたのネットワークで<br />次世代の“鍵”をビジネスに</h1>
+          <p class="sub">
+            「世界50ヵ国・80万台導入の生命認証ブランド。代理店募集スタート」
+          </p>
+          <div class="actions">
+            <a class="btn primary" href="#cta">今すぐ資料請求</a>
+            <a class="btn secondary" href="#features">無料相談する</a>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!--  Products  -->
-    <section class="products" aria-label="Our Product" id="products">
-      <div class="products-inner">
-        <div class="prod-head">
-          <div>
-            <h2>
-              <span class="em">世界最高の</span> 認証速度と認証率を誇る、<span
-                class="em"
-                >生体認証システム</span
-              >の完成系
-            </h2>
-            <p class="sub">Our Product</p>
-            <p class="desc">
-              オープンセサミとは、世界最高の指紋・顔・静脈認証テクノロジーを使用することで、セキュリティ性と利便性を高次のものへと高めた「未来のカギ」です。施設・解錠・入退室管理・勤怠管理を主としたこの画期的な生体認証システムは、米国や韓国の重要国家機関を含む世界50カ国に80万台を超える納入実績を誇ります。
-            </p>
-          </div>
-          <!-- <div class="prod-hero"><img src="https://via.placeholder.com/760x560?text=KV+Model" alt="キービジュアル" loading="lazy" decoding="async"></div> -->
-        </div>
-
-        <div class="prod-grid">
-          <article class="prod-card">
-            <div class="thumb">
+        <div class="device" aria-label="デバイスのイメージ">
+          <div class="device-card" id="tilt">
+            <picture class="device-image">
               <img
-                src="images/hero-img1.PNG"
-                alt="セサミタッチ"
-                loading="lazy"
+                id="device-img"
+                src="img/hero-img01.png"
+                width="420"
+                height="640"
+                alt="顔認証デバイス（仮）"
+                fetchpriority="high"
                 decoding="async"
+                loading="eager"
               />
-            </div>
-            <div class="caption">
-              <p class="lead">認証速度世界最速</p>
-              <h3>セサミタッチ</h3>
-            </div>
-          </article>
-          <article class="prod-card">
-            <div class="thumb">
-              <img
-                src="images/hero-img2.PNG"
-                alt="セサミワンPro"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            <div class="caption">
-              <p class="lead">指紋認証も搭載可能なハイエンドモデル</p>
-              <h3>セサミワンPro</h3>
-            </div>
-          </article>
-          <article class="prod-card">
-            <div class="thumb">
-              <img
-                src="images/hero-img3.PNG"
-                alt="セサミタッチLite"
-                loading="lazy"
-                decoding="async"
-              />
-            </div>
-            <div class="caption">
-              <p class="lead">手のひらサイズのコンパクトタイプ</p>
-              <h3>セサミタッチLite</h3>
-            </div>
-          </article>
-        </div>
-
-        <!-- <div class="prod-cta">
-          <a href="#products" class="btn-list">製品一覧</a>
-        </div> -->
-
-        <!-- YouTube 2カラム -->
-        <div class="prod-videos">
-          <!-- <div class="video">
-            <div class="ratio">
-              <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/MHkJpt2f-Qg?si=PV2oKl2PH5ZRClhA"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-              ></iframe>
-            </div>
-          </div> -->
-          <div class="video">
-            <div class="ratio">
-              <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/ljibKRrgz2o?si=OX1Lgw7CYixv-KX5"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-              ></iframe>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- solutions -->
-    <section class="solutions" aria-label="Solutions">
-      <div class="solutions-inner">
-        <div class="sol-left">
-          <h2>あらゆる<br /><span class="em">問題を</span>解決</h2>
-        </div>
-        <div class="sol-grid">
-          <div class="sol-card">
-            <div class="icon" aria-hidden="true">
-              <img src="images/sol-img01.png" alt="" />
-            </div>
-            <p>部外者の立ち入りを<br />制限したい</p>
-          </div>
-          <div class="sol-card">
-            <div class="icon" aria-hidden="true">
-              <img src="images/sol-img02.jpg" alt="" />
-            </div>
-            <p>勤怠管理を行い、<br />不正や不要な残業を防止したい</p>
-          </div>
-          <div class="sol-card">
-            <div class="icon" aria-hidden="true">
-              <img src="images/sol-img03.png" alt="" />
-            </div>
-            <p>正確な<br />入退室をしたい</p>
-          </div>
-          <div class="sol-card">
-            <div class="icon" aria-hidden="true">
-              <img src="images/sol-img04.png" alt="" />
-            </div>
-            <p>情報漏洩を<br />防ぎたい</p>
-          </div>
-          <div class="sol-card">
-            <div class="icon" aria-hidden="true">
-              <img src="images/sol-img05.png" alt="" />
-            </div>
-            <p>カギの管理を<br />手軽にしたい</p>
-          </div>
-          <div class="sol-card">
-            <div class="icon" aria-hidden="true">
-              <img src="images/sol-img06.png" alt="" />
-            </div>
-            <p>
-              カードキーを使用しているが貸し借りやインロック、<br />スキミングが不安
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- features1 -->
-    <section class="features" aria-label="Feature">
-      <div class="features-inner" id="Feature-01">
-        <div class="feat-hero">
-          <div class="feat-text">
-            <h3><span class="num">01</span> 世界最高の生体認証システム</h3>
-            <div>
-              <span class="logo-inline">
-                <img src="images/Open-Sesameロゴ.png" alt="Open-Sesame" />
-              </span>
-              の3つの特徴
-            </div>
-            <p>
-              創業23年という業界屈指のノウハウを活かし、世界最高のスペックを実現。これからも世界一の便利・安全をお届けします。
-            </p>
-          </div>
-          <!-- <div class="feat-img">
-            <img
-              src="https://via.placeholder.com/480x340?text=Feature+Image"
-              alt="特徴イメージ"
-              loading="lazy"
-              decoding="async"
-            />
-          </div> -->
-        </div>
-
-        <div class="feat-grid">
-          <div class="feat-card">
-            <div class="icon" aria-hidden="true">
-              <img src="images/feat-img01.png" alt="" />
-            </div>
-            <h5>速い</h5>
-            <p class="lead">認証速度 世界最速0.1秒</p>
-            <p>指紋や顔を読み取った瞬間に認証が完了し、カギが開きます。</p>
-          </div>
-          <div class="feat-card">
-            <div class="icon" aria-hidden="true">
-              <img src="images/feat-img02.png" alt="" />
-            </div>
-            <h5>正確</h5>
-            <p class="lead">認証率 世界最高99.99999%以上</p>
-            <p>
-              一度の読み取りで確実に認証。世界最高水準の精度により、誤認証や認証エラーの心配を極限まで排除しました。
-            </p>
-          </div>
-          <div class="feat-card">
-            <div class="icon" aria-hidden="true">
-              <img src="images/feat-img03.png" alt="" />
-            </div>
-            <h5>安定</h5>
-            <p class="lead">ウォークスルー認証</p>
-            <p>
-              多方向認証や同時認証などの機能で、歩きながらでも安定した認証を実現しています。
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- features2 -->
-    <section class="features alt" aria-label="Feature-2">
-      <div class="features-inner" id="Feature-02">
-        <div class="feat-hero reverse">
-          <div class="feat-img">
-            <img src="images/feat-hero-img02.jpg" alt="" />
-          </div>
-          <div class="feat-text">
-            <h3><span class="num">02</span>国家レベルのセキュリティ</h3>
-            <h4>高度なセキュリティを実現する3つの性能</h4>
-            <p>
-              国内外の国家機関・金融機関・データセンターなど、セキュリティ要件の厳しい重要施設にも多数導入されています。
-            </p>
-          </div>
-        </div>
-
-        <div class="feat-grid">
-          <div class="feat-card">
-            <div class="icon" aria-hidden="true">
-              <img src="images/feat-img04.png" alt="" />
-            </div>
-            <h5>世界トップの個人特定率</h5>
-            <p>オープンセサミは世界最高水準の認証率99.99999%以上を誇ります。圧倒的な精度により、未登録生体の誤認証リスクを極限まで低減し、安心と信頼を提供します。</p>
-          </div>
-          <div class="feat-card">
-            <div class="icon" aria-hidden="true">
-              <img src="images/feat-img05.png" alt="" />
-            </div>
-            <h5>国際特許取得 真皮認証技術<br>｢Lumidigm｣採用</h5>
-            <p>
-              真皮認証は表皮ではなく、真皮の指紋を読み取ることにより、偽造やなりすましを完全に防ぎます。
-            </p>
-            <p><small>※｢Lumidigm｣は米国連邦捜査局｢FBI｣の認証を取得しています。<br>※｢Lumidigm｣はHID Global社の登録商標です。</small></p>
-          </div>
-          <div class="feat-card">
-            <div class="icon" aria-hidden="true">
-              <img src="images/feat-img06.png" alt="" />
-            </div>
-            <h5>高性能AI搭載</h5>
-            <p>
-              顔認証システムには高性能AIを搭載しており、動体検知機能や同時認証機能を有しているので偽造を検知し、全ての顔を見逃さず読み取ります。
-            </p>
-          </div>
-      </div>
-    </section>
-
-    <!-- works -->
-    <section class="works" aria-label="Works" id="works">
-      <div class="works-inner">
-        <div class="works-head">
-          <div class="works-text">
-            <p class="sub">Works</p>
-            <h2>納入実績<br><span class="num">全世界 800,000台</span></h2>
-            <p class="lead">安心と信頼の実績</p>
-            <p>オープンセサミは創業から23年間、世界各国で80万台以上使用されており、重要国家機関や大手企業にも導入されています。</p>
-          </div>
-          <!-- <div class="works-img">
-            <img src="" alt="">
-          </div> -->
-        </div>
-
-        <div class="works-scroller">
-          <div class="works-cards" role="region" aria-label="納入実績スライダー">
-            <article class="work-card" id="work-1">
-              <img src="images/works-img01.jpeg" alt="" loading="lazy" decoding="async">
-              <div class="meta">
-                <h4>会員制バー</h4>
-                <p class="place">福岡県</p>
-                <span class="tag">セサミタッチ</span>
-              </div>
-            </article>
-
-            <article class="work-card" id="work-2">
-              <img src="images/works-img02.jpeg" alt="" loading="lazy" decoding="async">
-              <div class="meta">
-                <h4>ダンススクール</h4>
-                <p class="place">東京都</p>
-                <span class="tag">セサミタッチPro</span>
-              </div>
-            </article>
-
-            <article class="work-card" id="work-3">
-              <img src="images/works-img03.jpeg" alt="" loading="lazy" decoding="async">
-              <div class="meta">
-                <h4>情報センター</h4>
-                <p class="place">福岡県</p>
-                <span class="tag">セサミタッチ</span>
-              </div>
-            </article>
-
-            <article class="work-card" id="work-4">
-              <img src="images/works-img04.jpeg" alt="" loading="lazy" decoding="async">
-              <div class="meta">
-                <h4>保育園</h4>
-                <p class="place">福岡県</p>
-                <span class="tag">セサミタッチ</span>
-              </div>
-            </article>
-
-            <article class="work-card" id="work-5">
-              <img src="images/works-img05.jpeg" alt="" loading="lazy" decoding="async">
-              <div class="meta">
-                <h4>食品工場</h4>
-                <p class="place">福岡県</p>
-                <span class="tag">FG-3300F</span>
-              </div>
-            </article>
-
-            <article class="work-card" id="work-6">
-              <img src="images/works-img06.jpeg" alt="" loading="lazy" decoding="async">
-              <div class="meta">
-                <h4>マンション</h4>
-                <p class="place">東京都</p>
-                <span class="tag">FINGUARD-S1</span>
-              </div>
-            </article>
-          </div>
-
-          <div class="works-dots" aria-label="スライドナビ">
-            <a href="#work-1" class="dot" aria-current="true"></a>
-            <a href="#work-2" class="dot"></a>
-            <a href="#work-3" class="dot"></a>
-            <a href="#work-4" class="dot"></a>
-            <a href="#work-5" class="dot"></a>
-            <a href="#work-6" class="dot"></a>
-          </div>
-        </div>
-
-        <!-- <div class="tv">
-          <h3 class="tv-title">TV番組・ドラマ多数出演!</h3>
-          <div class="tv-grid">
-            <a href="#tv-1" class="tv-card">
-              <img src="images/tv-img01.jpg" alt="">
-            </a>
-            <a href="#tv-2" class="tv-card">
-              <img src="images/tv-img02.webp" alt="">
-            </a>
-            <a href="#tv-3" class="tv-card">
-              <img src="images/tv-img03.jpg" alt="">
-            </a>
-            <a href="#tv-4" class="tv-card">
-              <img src="images/tv-img04.webp" alt="">
-            </a>
-          </div> -->
-        </div>
-      </div>
-    </section>
-
-    <!-- <div id="tv-1" class="lightbox" role="dialog" aria-label="番組詳細">
-      <div class="panel">
-        <a href="#close" class="close" aria-label="閉じる">✕</a>
-        <img src="images/tv-img01.jpg" alt="">
-        <div class="info">
-          <h4>マツコ会議</h4>
-          <p class="date">2019/10/05</p>
-        </div>
-      </div>
-    </div>
-    <div id="tv-2" class="lightbox" role="dialog" aria-label="番組詳細">
-      <div class="panel">
-        <a href="#close" class="close" aria-label="閉じる">✕</a>
-        <img src="images/tv-img02.webp" alt="">
-        <div class="info">
-          <h4>アイムホーム</h4>
-          <p class="date">2015/4/16</p>
-        </div>
-      </div>
-    </div>
-    <div id="tv-3" class="lightbox" role="dialog" aria-label="番組詳細">
-      <div class="panel">
-        <a href="#close" class="close" aria-label="閉じる">✕</a>
-        <img src="images/tv-img03.jpg" alt="">
-        <div class="info">
-          <h4>渡る世間は鬼ばかり</h4>
-          <p class="date">2015/3/15</p>
-        </div>
-      </div>
-    </div>
-    <div id="tv-4" class="lightbox" role="dialog" aria-label="番組詳細">
-      <div class="panel">
-        <a href="#close" class="close" aria-label="閉じる">✕</a>
-        <img src="images/tv-img04.webp" alt="">
-        <div class="info">
-          <h4>BORDER</h4>
-          <p class="date">2014/2/14</p>
-        </div>
-      </div>
-    </div> -->
-
-    <section class="contact" aria-label="Contact" id="contact">
-      <div class="contact-wrap">
-        <div class="contact-hero">
-          <div class="hero-bar">
-            <h3>Contact</h3>
-          <div class="summary">
-            <h2>お問い合わせ</h2>
-            <div class="cols">
-              <div class="col mail">
-                <p class="label">
-                  <span class="ico-mail" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                      <path d="M3.5 6.75A1.75 1.75 0 0 1 5.25 5h13.5A1.75 1.75 0 0 1 20.5 6.75v10.5A1.75 1.75 0 0 1 18.75 19H5.25A1.75 1.75 0 0 1 3.5 17.25V6.75Z" stroke="currentColor" stroke-width="1.8" />
-                      <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </span>
-                  MAIL
-                </p>
-                <p class="address">
-                  <a href="mailto:opensesame.hokkaido@gmail.com"><strong>opensesame.hokkaido@gmail.com</strong></a>
-                </p>
-              </div>
-              <div class="col line">
-                <p>LINEでのお問い合わせも受付中</p>
-                <a href="#" class="btn-line" aria-label="公式LINEを開く">公式LINE</a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-card">
-          <form class="contact-form" method="post" action="/contact.php" novalidate>
-            <div class="form-group">
-              <fieldset>
-                <legend>お問い合わせ項目 <span class="req">必須</span></legend>
-                <div class="radio-group" role="radiogroup" aria-label="お問い合わせ項目">
-                  <label><input type="radio" name="item" value="purchase" required> ご注文（購入）</label>
-                  <label><input type="radio" name="item" value="subscription" required> ご注文（サブスク）</label>
-                  <label><input type="radio" name="item" value="product" required> 製品に関するご質問</label>
-                  <label><input type="radio" name="item" value="construction" required> 設置工事に関するご質問</label>
-                  <label><input type="radio" name="item" value="agency" required> 販売代理店について</label>
-                  <label><input type="radio" name="item" value="other" required> その他</label>
+            </picture>
+            <div class="gloss" aria-hidden="true"></div>
+            <div class="device-frame">
+              <div class="device-body">
+                <div class="device-screen">
+                  <div class="screen-face"></div>
                 </div>
-              </fieldset>
-            </div>
-
-            <div class="grid">
-              <div class="form-group">
-                <label for="company">会社名</label>
-                <input id="company" name="company" type="text" placeholder="会社名" autocomplete="organization">
-              </div>
-              <div class="form-group">
-                <label for="name">氏名 <span class="req">必須</span></label>
-                <input id="name" name="name" type="text" placeholder="お名前" autocomplete="name" required>
-              </div>
-              <div class="form-group">
-                <label for="email">メールアドレス <span class="req">必須</span></label>
-                <input id="email" name="email" type="email" placeholder="your@mail.com" autocomplete="email" required>
-              </div>
-              <div class="form-group">
-                <label for="tel">電話番号 <span class="req">必須</span></label>
-                <input id="tel" name="tel" type="tel" placeholder="09012345678" autocomplete="tel" inputmode="tel" pattern="[0-9\\-+() ]{9,16}" required>
-              </div>
-              <div class="form-group">
-                <label for="model">モデル（注文時必須）</label>
-                <select id="model" name="model">
-                  <option value="">選択してください</option>
-                  <option>セサミタッチ</option>
-                  <option>セサミワンPro</option>
-                  <option>セサミタッチLite</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="address">設置先住所（注文時必須）</label>
-                <input id="address" name="address" type="text" placeholder="住所" autocomplete="street-address">
-              </div>
-              <div class="form-group full">
-                <label for="message">お問い合わせ内容 <span class="req">必須</span></label>
-                <textarea id="message" name="message" rows="6" placeholder="お問い合わせ内容をご記入ください" required></textarea>
+                <div class="device-sensor">
+                  <div class="sensor-slot" title="指紋センサー（仮）"></div>
+                </div>
               </div>
             </div>
-
-            <div class="grid survey-dates">
-              <div class="form-group">
-                <label for="survey-date-1">現場調査日程　第一希望日</label>
-                <input type="date" id="survey-date-1" name="survey_date_1" aria-describedby="survey-hint">
-              </div>
-              <div class="form-group">
-                <label for="survey-date-2">現場調査日程　第二希望日</label>
-                <input type="date" id="survey-date-2" name="survey_date_2" aria-describedby="survey-hint">
-              </div>
-            </div>
-
-            <div class="grid install-dates">
-              <div class="form-group">
-                <label for="install-date-1">設置工事希望日程　第一希望日</label>
-                <input type="date" id="install-date-1" name="install_date_1" aria-describedby="install-hint">
-              </div>
-              <div class="form-group">
-                <label for="install-date-2">設置工事希望日程　第二希望日</label>
-                <input type="date" id="install-date-2" name="install_date_2" aria-describedby="install-hint">
-              </div>
-              <p id="install-hint" class="hint">※ 本日から3週間以降の候補日をご入力ください。</p>
-            </div>
-
-            <div class="form-group full">
-              <label for="legal-box">特定商取引法に基づく表記事項</label>
-              <div class="legal-box" id="legal-box" role="region" aria-label="特定商取引法に基づく表記事項" tabindex="0">
-                ・販売事業者 OPEN. X株式会社・代表者 代表取締役 桃井 義顕・所在地 （所在地をご記載ください）・連絡先 TEL: 092-688-2558 / E-mail: info@example.com・販売価格 各商品ページに税込価格を表示・商品代金以外の必要料金 送料・設置工事費・振込手数料 等・支払方法／時期 銀行振込、請求書払い 等（社内規定に準ずる）・引渡時期 ご注文確定後、在庫状況・工事日程に応じてご案内・返品・交換・キャンセル 未開封に限り到着後7日以内。設置後の返品不可（初期不良を除く）※上記はダミーです。実際の表記に置き換えてください。
-              </div>
-            </div>
-
-            <div class="form-group full">
-              <label for="terms-box">利用規約</label>
-              <div class="terms-box" id="terms-box" role="region" aria-label="利用規約" tabindex="0">
-                本利用規約（以下「本規約」といいます）は、OPEN. X株式会社（以下「当社」といいます）が提供する生体認証機器及び関連サービス（「本サービス」）の利用条件を定めるものです。第1条（適用範囲）1. 本規約は、ユーザーが当社の提供する本サービスを利用するすべての行為に適用されます。...（ダミー本文）
-              </div>
-            </div>
-
-            <div class="consent-row">
-              <label><input type="checkbox" id="agree-terms" required> 特定商取引法・利用規約に同意する</label>
-            </div>
-
-            <!-- <div class="recaptcha">
-              <div class="g-recaptcha" data-sitekey="__REPLACE_WITH_SITE_KEY__"></div>
-            </div> -->
-
-            <div class="form-actions">
-              <button type="submit">送信する</button>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </section>
 
-    <script src="script.js" defer></script>
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- Pain point -->
+    <section class="pain" id="pain">
+      <div class="container">
+        <h2 class="section-title">こんなお悩みありあせんか？</h2>
+        <div class="cards">
+          <article class="card">
+            <figure class="card-media">
+              <img
+                src="img/pain-sample01.png"
+                alt="商材の差別化イメージ"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <h3>扱う商材の差別化が難しい</h3>
+            <p class="muted">ここに説明文が入ります。</p>
+          </article>
+
+          <article class="card">
+            <figure class="card-media">
+              <img
+                src="img/pain-sample02.png"
+                alt="営業リソース活用のイメージ"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <h3>営業リソースを活かせる新しい商材を探している</h3>
+            <p class="muted">ここに説明文が入ります。</p>
+          </article>
+
+          <article class="card">
+            <figure class="card-media">
+              <img
+                src="img/pain-sample03.png"
+                alt="手厚いサポートのイメージ"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <h3>サポート体制の整った企業と組みたい</h3>
+            <p class="muted">ここに説明文が入ります。</p>
+          </article>
+        </div>
+
+        <div class="pain-cta">
+          <a href="#sol-title" class="down-arrow" aria-label="解決策を見る">
+            <svg
+              viewBox="0 0 24 24"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </a>
+        </div>
+
+        <div class="solution" aria-labelledby="sol-title">
+          <div>
+            <h3 id="sol-title" class="solution-title">
+              その課題、オープンセサミで解決できます
+            </h3>
+          </div>
+          <figure
+            class="solution-figure"
+            role="img"
+            aria-label="課題解決のイメージ（仮）"
+          >
+            <picture>
+              <img
+                src="assets/solution.jpg"
+                alt="課題解決のイメージ（仮）"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+          </figure>
+        </div>
+        <p class="muted" style="margin-top: 12px">
+          ※上記はすべて仮テキストです。
+        </p>
+      </div>
+    </section>
+
+    <!-- Reasons -->
+    <section class="reasons" id="reasons" aria-label="選ばれ続ける理由">
+      <div class="container">
+        <h2 class="section-title">選ばれ続ける理由</h2>
+
+        <div class="reasons-grid">
+          <article class="reason-card">
+            <figure class="reason-fig">
+              <img
+                src="img/reason-img01.PNG"
+                alt="認証が素早く完了するイメージ"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <h3 class="reason-title">認証速度</h3>
+            <div class="metric">
+              <strong data-count="0.1" data-decimals="1">0.0</strong
+              ><span>秒</span>
+            </div>
+            <p class="muted">
+              待機時間を感じさせないレスポンスで、ストレスを最小化します。（仮）
+            </p>
+          </article>
+
+          <article class="reason-card">
+            <figure class="reason-fig">
+              <img
+                src="img/reason-img02.PNG"
+                alt="世界各国での導入実績を示すイメージ"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <h3 class="reason-title">世界導入実績</h3>
+            <div class="metric duo">
+              <span class="chip"><span data-count="50">0</span>ヵ国</span>
+              <span class="chip"><span data-count="80">0</span>万台</span>
+            </div>
+            <p class="muted">
+              グローバル規模での運用に耐える信頼性と拡張性を備えています。（仮）
+            </p>
+          </article>
+
+          <article class="reason-card">
+            <figure class="reason-fig">
+              <img
+                src="img/reason-img03.PNG"
+                alt="誤認率が極めて低いことを示すイメージ"
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+            <h3 class="reason-title">誤認率</h3>
+            <div class="metric">
+              <span class="lt" aria-hidden="true"></span>
+              <strong data-count="0.01" data-decimals="2">0.00</strong
+              ><span>%</span>
+            </div>
+            <p class="muted">
+              厳密なアルゴリズムと検証プロセスにより、高い精度を維持します。（仮）
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="features" id="features" aria-label="導入メリット">
+      <div class="container">
+        <h2 class="section-title">オープンセサミ代理店になるメリット（仮）</h2>
+
+        <div class="grid">
+          <ul class="benefit-cards" role="list">
+            <!-- 1 -->
+            <li class="benefit-card">
+              <div class="icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="3 17 9 11 13 15 21 7" />
+                </svg>
+              </div>
+              <div class="benefit-body">
+                <h3>高成長マーケット×低競合</h3>
+                <p>
+                  拡大中の認証領域で、差別化しやすいポジションを素早く確立。
+                </p>
+              </div>
+            </li>
+
+            <!-- 2 -->
+            <li class="benefit-card">
+              <div class="icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="5" width="18" height="14" rx="2" />
+                  <polygon
+                    points="10,9 16,12 10,15"
+                    fill="currentColor"
+                    stroke="none"
+                  />
+                </svg>
+              </div>
+              <div class="benefit-body">
+                <h3>豊富な販売支援資料・動画</h3>
+                <p>
+                  提案テンプレ・デモ動画・導入事例を完備。初回提案からスムーズ。
+                </p>
+              </div>
+            </li>
+
+            <!-- 3 -->
+            <li class="benefit-card">
+              <div class="icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 2l7 4v6c0 5-3.5 9-7 10-3.5-1-7-5-7-10V6l7-4z" />
+                  <path d="M9 12l2 2 4-4" />
+                </svg>
+              </div>
+              <div class="benefit-body">
+                <h3>技術・導入サポート完備</h3>
+                <p>
+                  要件整理から設計・設置・運用まで並走。技術相談も迅速に対応。
+                </p>
+              </div>
+            </li>
+
+            <!-- 4 -->
+            <li class="benefit-card">
+              <div class="icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M17 2l4 4-4 4" />
+                  <path d="M3 11a8 8 0 0114-5" />
+                  <path d="M7 22l-4-4 4-4" />
+                  <path d="M21 13a8 8 0 01-14 5" />
+                </svg>
+              </div>
+              <div class="benefit-body">
+                <h3>リピート契約で継続収益</h3>
+                <p>更新・拡張で安定的な売上を積み上げるビジネスモデル。</p>
+              </div>
+            </li>
+
+            <!-- 5 -->
+            <li class="benefit-card">
+              <div class="icon" aria-hidden="true">
+                <svg
+                  viewBox="0 0 24 24"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M12 22s-6-5.33-6-10a6 6 0 1112 0c0 4.67-6 10-6 10z"
+                  />
+                  <circle cx="12" cy="12" r="2" />
+                </svg>
+              </div>
+              <div class="benefit-body">
+                <h3>全国対応の安心サポート体制</h3>
+                <p>
+                  地域を問わず導入支援。トラブル時もリモート＆現地で迅速対応。
+                </p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Requirements -->
+    <section
+      class="requirements"
+      id="requirements"
+      aria-label="募集要件・サポート内容"
+    >
+      <div class="container">
+        <h2 class="section-title">募集要件・サポート内容</h2>
+
+        <div class="reqs-grid">
+          <article class="reqs-panel">
+            <dl class="reqs-list">
+              <div class="reqs-item">
+                <dt>募集対象</dt>
+                <dd>法人・個人問わず（営業経験者歓迎）</dd>
+              </div>
+              <div class="reqs-item">
+                <dt>活動エリア</dt>
+                <dd>全国（地域優先制度あり）</dd>
+              </div>
+              <div class="reqs-item">
+                <dt>初期費用</dt>
+                <dd>無料または応相談</dd>
+              </div>
+              <div class="reqs-item">
+                <dt>サポート内容</dt>
+                <dd>導入研修・販促物提供・技術支援</dd>
+              </div>
+              <div class="reqs-item">
+                <dt>報酬形態</dt>
+                <dd>契約手数料＋継続インセンティブ</dd>
+              </div>
+            </dl>
+          </article>
+
+          <figure
+            class="reqs-figure"
+            role="img"
+            aria-label="募集・サポートのイメージ（仮）"
+          >
+            <img
+              src="img/recruit-sample.jpg"
+              alt="募集・サポートのイメージ（仮）"
+              loading="lazy"
+              decoding="async"
+            />
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+      <div class="container">
+        <h2 class="section-title">よくあるご質問</h2>
+        <div class="faq">
+          <details>
+            <summary>
+              <span class="arrow">▶</span>初期費用はかかりますか？
+            </summary>
+            <div class="muted" style="margin-top: 10px">
+              回答ダミーテキスト。
+            </div>
+          </details>
+          <details>
+            <summary>
+              <span class="arrow">▶</span>
+              営業経験がなくても大丈夫ですか？
+            </summary>
+            <div class="muted" style="margin-top: 10px">
+              回答ダミーテキスト。
+            </div>
+          </details>
+          <details>
+            <summary>
+              <span class="arrow">▶</span>
+              エリア制限はありますか？
+            </summary>
+            <div class="muted" style="margin-top: 10px">
+              回答ダミーテキスト。
+            </div>
+          </details>
+          <details>
+            <summary>
+              <span class="arrow">▶</span>
+              納品や技術サポートは？
+            </summary>
+            <div class="muted" style="margin-top: 10px">
+              回答ダミーテキスト。
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA：白背景＋シンプルフォーム -->
+    <section class="cta" id="cta" aria-label="資料請求・お申し込み">
+      <div class="container">
+        <h2 class="section-title">資料請求・お申し込み</h2>
+        <form class="cta-form" action="#" method="post" novalidate>
+          <div class="form-grid">
+            <!-- 会社名 -->
+            <div>
+              <label for="company"
+                >会社名<span class="req" aria-hidden="true">*</span></label
+              >
+              <input
+                id="company"
+                name="company"
+                type="text"
+                placeholder="例）オープンセサミ株式会社"
+                required
+              />
+            </div>
+            <!-- 氏名 -->
+            <div>
+              <label for="name"
+                >氏名<span class="req" aria-hidden="true">*</span></label
+              >
+              <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="例）山田 太郎"
+                autocomplete="name"
+                required
+              />
+            </div>
+            <!-- メール -->
+            <div>
+              <label for="email"
+                >メール<span class="req" aria-hidden="true">*</span></label
+              >
+              <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="例）example@example.com"
+                autocomplete="email"
+                required
+              />
+            </div>
+            <!-- 電話 -->
+            <div>
+              <label for="tel">電話</label>
+              <input
+                id="tel"
+                name="tel"
+                type="tel"
+                placeholder="例）03-1234-5678"
+                inputmode="tel"
+                pattern="[0-9\-\+\s()]{8,}"
+              />
+              <div class="form-help">半角数字・ハイフン可</div>
+            </div>
+            <!-- 希望エリア -->
+            <div class="full">
+              <label for="area"
+                >希望エリア<span class="req" aria-hidden="true">*</span></label
+              >
+              <select id="area" name="area" required>
+                <option value="" selected disabled>選択してください</option>
+                <option>北海道・東北</option>
+                <option>関東</option>
+                <option>中部</option>
+                <option>近畿</option>
+                <option>中国・四国</option>
+                <option>九州・沖縄</option>
+                <option>海外</option>
+              </select>
+            </div>
+            <!-- 自由記入欄 -->
+            <div class="full">
+              <label for="note">自由記入欄</label>
+              <textarea
+                id="note"
+                name="note"
+                placeholder="導入時期や用途、現在の課題などがあればご記入ください"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button
+              class="btn primary"
+              type="submit"
+              name="action"
+              value="request"
+            >
+              資料請求する
+            </button>
+            <button
+              class="btn secondary"
+              type="submit"
+              name="action"
+              value="apply"
+            >
+              申し込む
+            </button>
+          </div>
+
+          <div class="policy">
+            このフォームを送信することで、
+            <a href="#" target="_blank" rel="noopener">プライバシーポリシー</a>
+            に同意したものとみなされます。
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer" id="site-footer" aria-label="フッター">
+      <div class="container">
+        <div class="f-grid">
+          <div class="brand-block">
+            <a class="brand" href="#top">
+              <img
+                class="tone-invert"
+                src="img/Open-Sesameロゴ.png"
+                alt="オープンセサミ"
+                width="156"
+                height="28"
+                decoding="async"
+                fetchpriority="high"
+              />
+            </a>
+            <nav class="footer-nav" aria-label="フッターナビゲーション">
+              <ul>
+                <li><a href="/recruit">募集要項</a></li>
+                <li><a href="/faq">FAQ</a></li>
+                <li><a href="/about">会社概要</a></li>
+              </ul>
+            </nav>
+          </div>
+
+          <div class="companies" aria-label="会社情報">
+            <div class="company-grid">
+              <section class="company-card" aria-labelledby="corp-hkd">
+                <h3 id="corp-hkd">オープンセサミ北海道株式会社</h3>
+                <address>
+                  北海道札幌市東区北14条東7丁目1-36マサハルビル2階
+                </address>
+                <a
+                  class="tel"
+                  href="tel:09092295566"
+                  aria-label="電話 090-9229-5566"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M22 16.92V21a2 2 0 0 1-2.18 2A19.8 19.8 0 0 1 3 7.18 2 2 0 0 1 5 5h4.09a1 1 0 0 1 1 .75l1 4a1 1 0 0 1-.27.95l-2.2 2.2a16 16 0 0 0 6.4 6.4l2.2-2.2a1 1 0 0 1 .95-.27l4 1a1 1 0 0 1 .75 1Z"
+                    />
+                  </svg>
+                  090-9229-5566
+                </a>
+              </section>
+
+              <section class="company-card" aria-labelledby="corp-sendai">
+                <h3 id="corp-sendai">オープンセサミ仙台株式会社</h3>
+                <address>
+                  宮城県仙台市青葉区昭和町5番23-201号サンシティ23
+                </address>
+                <a
+                  class="tel"
+                  href="tel:09092295566"
+                  aria-label="電話 090-9229-5566"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M22 16.92V21a2 2 0 0 1-2.18 2A19.8 19.8 0 0 1 3 7.18 2 2 0 0 1 5 5h4.09a1 1 0 0 1 1 .75l1 4a1 1 0 0 1-.27.95l-2.2 2.2a16 16 0 0 0 6.4 6.4l2.2-2.2a1 1 0 0 1 .95-.27l4 1a1 1 0 0 1 .75 1Z"
+                    />
+                  </svg>
+                  090-9229-5566
+                </a>
+              </section>
+            </div>
+          </div>
+        </div>
+
+        <div class="copyright">
+          <small>© 2025 OpenSesame Inc.</small>
+          <div class="">
+            <a href="">プライバシーポリシー</a>
+            <span aria-hidden="true">/</span>
+            <a href="">利用規約</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
   </body>
 </html>
-
-
-
-

@@ -1,424 +1,332 @@
+/*
+ * script.js 完全版（ヒーロー融合・最終）
+ * — 当初のヒーロー演出を現在構成へ移植し、全体の動的要素を統合 —
+ *  機能: アクセシブルなドロワー / スクロール進捗 / リビール(Intersection+WAAPI)
+ *        カウンター(小数対応) / ヒーロー・パララックス(ポインター)
+ *        デバイス・チルト / 粒子(フワフワ光) / Reduce Motion尊重
+ */
 (() => {
-  ("use strict");
+  "use strict";
 
+  // ===================== utils =====================
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+  const on = (el, ev, fn, opt) => el && el.addEventListener(ev, fn, opt);
+  const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+  const prefersReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const isTouch = matchMedia("(pointer: coarse)").matches;
+  const rafThrottle = (fn) => {
+    let ticking = false;
+    return (...a) => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        fn(...a);
+      });
+    };
+  };
 
-  /* -----------------------------
-   * 1) モバイルメニュー
-   * ----------------------------- */
-  (function mobileMenu() {
-    const toggle = $(".menu-toggle");
-    const menu = $("#menu");
-    const overlay = $(".nav-overlay");
+  // ===================== 1) Header Drawer (A11y) =====================
+  const hamb = $('[data-hamburger], .hamb, button[aria-controls="drawer"]');
+  const drawer = $("[data-drawer], #drawer");
+  const FOCUSABLE =
+    'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])';
+  let restoreFocus = null;
 
-    if (!toggle || !menu || !overlay) return;
-
-    const focusableSel =
-      'a[href], area[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
-
-    function openMenu() {
-      menu.classList.add("open");
-      toggle.setAttribute("aria-expanded", "true");
-      overlay.hidden = false;
-      overlay.classList.add("show");
-      document.body.classList.add("no-scroll");
-      // フォーカストラップのため、最初のリンクへ
-      const first = menu.querySelector(focusableSel);
-      (first || toggle).focus({ preventScroll: true });
-      document.addEventListener("keydown", onKeydown);
+  const setDrawerState = (open) => {
+    if (!hamb || !drawer) return;
+    drawer.classList.toggle("open", open);
+    drawer.hidden = !open;
+    hamb.setAttribute("aria-expanded", String(open));
+    if (open) {
+      restoreFocus = document.activeElement;
+      $(FOCUSABLE, drawer)?.focus({ preventScroll: true });
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      (restoreFocus || hamb)?.focus?.({ preventScroll: true });
     }
-
-    function closeMenu() {
-      menu.classList.remove("open");
-      toggle.setAttribute("aria-expanded", "false");
-      overlay.classList.remove("show");
-      document.body.classList.remove("no-scroll");
-      // 非表示（トランジション後にhiddenを戻す）
-      setTimeout(() => {
-        if (!overlay.classList.contains("show")) overlay.hidden = true;
-      }, 200);
-      toggle.focus({ preventScroll: true });
-      document.removeEventListener("keydown", onKeydown);
-    }
-
-    function onKeydown(e) {
-      if (e.key === "Escape") {
+  };
+  if (drawer) drawer.hidden = !drawer.classList.contains("open");
+  if (hamb && drawer) {
+    hamb.setAttribute("aria-controls", drawer.id || "drawer");
+    hamb.setAttribute(
+      "aria-expanded",
+      String(drawer.classList.contains("open"))
+    );
+    on(hamb, "click", (e) => {
+      e.preventDefault();
+      setDrawerState(!drawer.classList.contains("open"));
+    });
+  }
+  on(document, "keydown", (e) => {
+    if (e.key === "Escape" && drawer?.classList.contains("open"))
+      setDrawerState(false);
+    if (e.key === "Tab" && drawer?.classList.contains("open")) {
+      const f = $$(FOCUSABLE, drawer).filter((el) => el.offsetParent !== null);
+      if (!f.length) return;
+      const first = f[0],
+        last = f[f.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
         e.preventDefault();
-        closeMenu();
-        return;
-      }
-      if (e.key === "Tab" && menu.classList.contains("open")) {
-        // フォーカストラップ
-        const focusables = $$(focusableSel, menu);
-        if (!focusables.length) return;
-        const firstEl = focusables[0];
-        const lastEl = focusables[focusables.length - 1];
-        if (e.shiftKey && document.activeElement === firstEl) {
-          lastEl.focus();
-          e.preventDefault();
-        } else if (!e.shiftKey && document.activeElement === lastEl) {
-          firstEl.focus();
-          e.preventDefault();
-        }
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
       }
     }
+  });
+  on(drawer, "click", (e) => {
+    const t = e.target;
+    if (
+      t instanceof Element &&
+      (t.matches('a[href^="#"]') || t.hasAttribute("data-close"))
+    )
+      setDrawerState(false);
+  });
 
-    toggle.addEventListener("click", () => {
-      const isOpen = menu.classList.contains("open");
-      isOpen ? closeMenu() : openMenu();
-    });
-    overlay.addEventListener("click", closeMenu);
-    // メニュー内リンクで自動クローズ
-    $$("#menu a").forEach((a) => a.addEventListener("click", closeMenu));
-    // 幅が戻ったら状態リセット
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 900) closeMenu();
-    });
-  })();
+  // ===================== 2) Scroll Progress =====================
+  const progressEl = $("#progress") || $(".scroll-progress span");
+  const updateProgress = () => {
+    const h = document.documentElement;
+    const max = Math.max(1, h.scrollHeight - h.clientHeight);
+    const ratio = clamp(h.scrollTop / max, 0, 1);
+    if (progressEl) progressEl.style.width = (ratio * 100).toFixed(2) + "%";
+    h.style.setProperty("--scroll-progress", String(ratio));
+  };
+  const onScroll = rafThrottle(updateProgress);
+  on(document, "scroll", onScroll, { passive: true });
+  on(window, "resize", onScroll);
+  updateProgress();
 
-  /* ===== Hero Enhancement (UI / Sync / Swipe / Tilt) ===== */
-  (() => {
-    const wrap = document.querySelector("#hero-left");
-    if (!wrap) return;
-
-    const imgs = Array.from(wrap.querySelectorAll("img"));
-    if (imgs.length === 0) return;
-
-    // UI生成
-    const ui = wrap.querySelector(".hero-ui");
-    const dotsWrap = wrap.querySelector(".hero-dots");
-    const prevBtn = wrap.querySelector(".hero-prev");
-    const nextBtn = wrap.querySelector(".hero-next");
-    const progress = wrap.querySelector(".hero-progress span");
-
-    // 角丸内での3Dチルト用ラッパ
-    wrap.classList.add("hero-tilt");
-
-    // ドット生成
-    dotsWrap.innerHTML = imgs
-      .map(
-        (_, i) =>
-          `<button type="button" role="tab" aria-label="画像${
-            i + 1
-          }" aria-selected="false"></button>`
-      )
-      .join("");
-    const dots = Array.from(dotsWrap.querySelectorAll("button"));
-
-    const getIndex = () =>
-      imgs.findIndex((el) => el.classList.contains("active"));
-    const clamp = (i) => (i + imgs.length) % imgs.length;
-
-    let lastIndex = Math.max(0, getIndex());
-    let lastSwitchAt = performance.now();
-    const AUTO_MS = 4000; // あなたの旧スライダーに合わせる
-
-    function setActive(idx, { user = false } = {}) {
-      const cur = getIndex();
-      if (cur === idx) return;
-      imgs[cur]?.classList.remove("active");
-      imgs[idx]?.classList.add("active");
-      syncUI(); // 表示を揃える
-      if (user) lastSwitchAt = performance.now(); // 進捗リセット
-    }
-
-    function syncUI() {
-      const i = getIndex();
-      if (i < 0) return;
-      dots.forEach((d, k) => d.setAttribute("aria-selected", String(k === i)));
-      lastIndex = i;
-      // 進捗バー：0%→100%（旧スライダー周期に“見かけ上”同期）
-      if (progress) {
-        progress.style.transition = "none";
-        progress.style.width = "0%";
-        // 次フレームで伸ばす
-        requestAnimationFrame(() => {
-          progress.style.transition = `width ${AUTO_MS}ms linear`;
-          progress.style.width = "100%";
-        });
-      }
-    }
-
-    // 初期同期
-    syncUI();
-
-    // ドット/矢印操作
-    dots.forEach((d, k) =>
-      d.addEventListener("click", () => setActive(k, { user: true }))
-    );
-    prevBtn?.addEventListener("click", () =>
-      setActive(clamp(getIndex() - 1), { user: true })
-    );
-    nextBtn?.addEventListener("click", () =>
-      setActive(clamp(getIndex() + 1), { user: true })
-    );
-
-    // スワイプ（モバイル/トラックパッド）
-    let startX = 0,
-      startY = 0,
-      dragging = false;
-    const THRESH = 40;
-    wrap.addEventListener(
-      "touchstart",
-      (e) => {
-        const t = e.changedTouches[0];
-        startX = t.clientX;
-        startY = t.clientY;
-        dragging = true;
-      },
-      { passive: true }
-    );
-    wrap.addEventListener(
-      "touchend",
-      (e) => {
-        if (!dragging) return;
-        dragging = false;
-        const t = e.changedTouches[0];
-        const dx = t.clientX - startX,
-          dy = t.clientY - startY;
-        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > THRESH) {
-          dx < 0 ? nextBtn?.click() : prevBtn?.click();
-        }
-      },
-      { passive: true }
-    );
-
-    // 旧スライダーによる .active 変更を監視して同期
-    const mo = new MutationObserver((muts) => {
-      // activeの増減があれば同期
-      if (
-        muts.some((m) => m.type === "attributes" && m.attributeName === "class")
-      ) {
-        syncUI();
-        lastSwitchAt = performance.now();
-      }
-    });
-    mo.observe(wrap, {
-      subtree: true,
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    // マウスホバーの3Dチルト
-    const canTilt = matchMedia("(hover:hover) and (pointer:fine)").matches;
-    if (canTilt) {
-      const MAX = 8; // deg
-      wrap.addEventListener("pointermove", (e) => {
-        const rect = wrap.getBoundingClientRect();
-        const cx = rect.left + rect.width / 2;
-        const cy = rect.top + rect.height / 2;
-        const nx = (e.clientX - cx) / (rect.width / 2);
-        const ny = (e.clientY - cy) / (rect.height / 2);
-        wrap.style.transform = `perspective(900px) rotateY(${(nx * MAX).toFixed(
-          2
-        )}deg) rotateX(${(-ny * MAX).toFixed(2)}deg)`;
-      });
-      wrap.addEventListener("pointerleave", () => {
-        wrap.style.transform = "perspective(900px) rotateY(0) rotateX(0)";
-      });
-    }
-
+  // ===================== 3) Reveal on Scroll (WAAPI) =====================
+  // Heroの見出し群を対象化
+  $$(".lead > *").forEach((n) => n.setAttribute("data-reveal", ""));
+  const revealSel = [
+    "[data-reveal]",
+    ".card",
+    ".reason-card",
+    ".benefit-card",
+    ".feature-card",
+    ".cta-bar",
+    "table",
+    ".illus",
+    ".fade-in",
+  ].join(",");
+  const revealNodes = $$(revealSel);
+  if (revealNodes.length) {
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const bar = wrap.querySelector(".hero-progress span");
-          if (!bar) return;
-          if (!entry.isIntersecting) {
-            bar.style.transition = "none";
-          } else {
-            const elapsed = performance.now() - lastSwitchAt;
-            const rest = Math.max(0, AUTO_MS - elapsed);
-            bar.style.transition = "none";
-            bar.style.width = "0%";
-            requestAnimationFrame(() => {
-              bar.style.transition = `width ${rest}ms linear`;
-              bar.style.width = "100%";
-            });
+          if (!entry.isIntersecting) return;
+          const el = entry.target;
+          if (el.__revealed) {
+            io.unobserve(el);
+            return;
           }
+          el.__revealed = true;
+          if (prefersReduced) {
+            el.style.opacity = 1;
+            el.style.transform = "none";
+            io.unobserve(el);
+            return;
+          }
+          const delay = Number(
+            el.dataset.delay || el.style.getPropertyValue("--reveal-delay") || 0
+          );
+          el.animate(
+            [
+              {
+                opacity: 0,
+                transform: "translateY(12px)",
+                filter: "blur(6px)",
+              },
+              { opacity: 1, transform: "translateY(0)", filter: "blur(0)" },
+            ],
+            {
+              duration: 620,
+              easing: "cubic-bezier(.2,.7,.2,1)",
+              fill: "forwards",
+              delay,
+            }
+          );
+          io.unobserve(el);
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
     );
-    io.observe(wrap);
-  })();
 
-  (() => {
-    const card = document.querySelector("[data-catch]");
-    if (!card) return;
-
-    const lines = card.querySelectorAll(".fx-line");
-    lines.forEach((el, i) => {
-      el.style.transitionDelay = `${i * 120}ms`;
+    // 親グリッド単位でスタッガー
+    const groups = new Map();
+    revealNodes.forEach((el) => {
+      const parentKey =
+        el.closest(
+          ".reasons-grid, .benefit-cards, .cards, section, .container"
+        ) || document.body;
+      if (!groups.has(parentKey)) groups.set(parentKey, []);
+      groups.get(parentKey).push(el);
     });
+    groups.forEach((list) =>
+      list.forEach((el, i) => {
+        el.dataset.delay = String(Math.min(i * 80, 640));
+        io.observe(el);
+      })
+    );
+  }
 
-    requestAnimationFrame(() => {
-      card.classList.add("ready");
+  // ===================== 4) Counter (decimals) =====================
+  const counters = $$("[data-count]");
+  if (counters.length) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((ent) => {
+          if (!ent.isIntersecting) return;
+          const el = ent.target;
+          if (el.dataset.counted === "true") return;
+          el.dataset.counted = "true";
+          const target = Number(el.dataset.count || "0");
+          const duration = Number(el.dataset.duration || "1600");
+          const decimals = Number(el.dataset.decimals || "0");
+          const prefix = el.dataset.prefix || "";
+          const suffix = el.dataset.suffix || "";
+          const t0 = performance.now();
+          const format = (n) =>
+            Number(n).toLocaleString(undefined, {
+              minimumFractionDigits: decimals,
+              maximumFractionDigits: decimals,
+            });
+          const tick = (now) => {
+            const t = clamp((now - t0) / duration, 0, 1);
+            const raw = lerp(0, target, easeOutCubic(t));
+            const val = decimals > 0 ? raw : Math.round(raw);
+            el.textContent = `${prefix}${format(val)}${suffix}`;
+            if (t < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+          io.unobserve(el);
+        });
+      },
+      { threshold: 0.5 }
+    );
+    counters.forEach((n) => io.observe(n));
+  }
+
+  // ===================== 5) Hero Parallax (pointer) =====================
+  const hero = $(".hero");
+  const parallaxEls = hero ? $$("[data-parallax]", hero) : [];
+  const normDepth = (el) => {
+    let d = Number(el.dataset.parallax || "10");
+    // 当初: 10/18 のような整数px係数。小数(0.12)で渡された場合は *100 で人間感覚に合わせる
+    if (Math.abs(d) <= 1) d = d * 100; // 0.12 -> 12
+    return clamp(d, -40, 40);
+  };
+  const onPointerMove = (e) => {
+    if (!hero || prefersReduced || !parallaxEls.length) return;
+    const rect = hero.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5..0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    parallaxEls.forEach((el) => {
+      const d = normDepth(el);
+      el.style.transform = `translate(${(x * d).toFixed(2)}px, ${(
+        y * d
+      ).toFixed(2)}px)`;
     });
-  })();
+  };
+  on(hero, "pointermove", onPointerMove);
+  on(hero, "pointerleave", () =>
+    parallaxEls.forEach((el) => {
+      el.style.transform = "translate(0,0)";
+    })
+  );
 
-  /* -----------------------------
-   * 3) CSSライトボックスの補助
-   *    - :target運用をESC/背景クリックで閉じやすく
-   * ----------------------------- */
-  (function lightboxAssist() {
-    const boxes = $$(".lightbox");
-    if (!boxes.length) return;
+  // ===================== 6) Tilt (device card) =====================
+  const tiltTargets = $$("#tilt, [data-tilt]");
+  if (!prefersReduced && tiltTargets.length && !isTouch) {
+    tiltTargets.forEach((el) => {
+      const maxTilt = Number(el.dataset.tilt || "10");
+      const perspective = Number(el.dataset.perspective || "900");
+      const reset = () => {
+        el.style.transform = `perspective(${perspective}px) rotateX(0) rotateY(0)`;
+      };
+      reset();
+      on(el, "pointermove", (e) => {
+        const r = el.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        const rx = (-py * maxTilt).toFixed(2);
+        const ry = (px * maxTilt).toFixed(2);
+        el.style.transform = `perspective(${perspective}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+      });
+      on(el, "pointerleave", reset);
+    });
+  }
 
-    function closeByHash() {
-      // #close へ退避（存在不要）
-      if (location.hash && location.hash.startsWith("#tv-")) {
-        history.pushState(
-          "",
-          document.title,
-          window.location.pathname + window.location.search
-        );
-      }
+  // ===================== 7) Particles (CSS animation) =====================
+  const particleHost = $("#particles") || $("[data-particles]");
+  const spawnParticles = () => {
+    if (!particleHost || prefersReduced) return;
+    // 二重生成を防止
+    particleHost.querySelectorAll(".sparkle").forEach((n) => n.remove());
+    const base = Number(
+      particleHost.dataset.particles || (innerWidth <= 600 ? 18 : 28)
+    );
+    const total = clamp(base, 8, 64);
+    for (let i = 0; i < total; i++) {
+      const s = document.createElement("span");
+      s.className = "sparkle";
+      const size = 2 + Math.random() * 3; // 2-5px
+      s.style.width = s.style.height = size + "px";
+      s.style.left = (Math.random() * 100).toFixed(2) + "vw";
+      s.style.bottom = (-20 + Math.random() * 140).toFixed(2) + "px";
+      const dur = 10 + Math.random() * 16; // 10-26s
+      s.style.animation = `float ${dur.toFixed(2)}s linear infinite`;
+      s.style.animationDelay = (-Math.random() * dur).toFixed(2) + "s"; // ばらけさせる
+      particleHost.appendChild(s);
     }
-
-    // 背景クリックで閉じる
-    boxes.forEach((box) => {
-      box.addEventListener("click", (e) => {
-        if (e.target === box) {
-          e.preventDefault();
-          closeByHash();
-        }
+  };
+  spawnParticles();
+  let rt = 0;
+  on(window, "resize", () => {
+    clearTimeout(rt);
+    rt = setTimeout(spawnParticles, 200);
+  });
+  // 画面外では一時停止（省電力）
+  if (particleHost) {
+    const pIO = new IntersectionObserver((ents) => {
+      ents.forEach((e) => {
+        const run = e.isIntersecting && !prefersReduced;
+        particleHost.querySelectorAll(".sparkle").forEach((s) => {
+          s.style.animationPlayState = run ? "running" : "paused";
+        });
       });
     });
+    pIO.observe(particleHost);
+  }
 
-    // ESCで閉じる
-    document.addEventListener("keydown", (e) => {
-      if (
-        e.key === "Escape" &&
-        location.hash &&
-        location.hash.startsWith("#tv-")
-      ) {
-        e.preventDefault();
-        closeByHash();
-      }
+  // ===================== 8) Reduced Motion Fallback =====================
+  if (prefersReduced) {
+    // 即時リビール
+    revealNodes?.forEach?.((el) => {
+      el.style.opacity = 1;
+      el.style.transform = "none";
     });
-
-    // 開いたら閉じるボタンへフォーカス
-    window.addEventListener("hashchange", () => {
-      if (location.hash && location.hash.startsWith("#tv-")) {
-        const panel = $(location.hash + " .panel");
-        const closeBtn = panel && $(".close", panel);
-        closeBtn && closeBtn.focus({ preventScroll: true });
-      }
+    // カウントは即値
+    counters?.forEach?.((el) => {
+      const decimals = Number(el.dataset.decimals || "0");
+      const prefix = el.dataset.prefix || "";
+      const suffix = el.dataset.suffix || "";
+      const target = Number(el.dataset.count || "0");
+      el.textContent = `${prefix}${target.toLocaleString(undefined, {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals,
+      })}${suffix}`;
+      el.dataset.counted = "true";
     });
-  })();
+  }
 
-  /* -----------------------------
-   * 4) お問い合わせフォームの振る舞い
-   *    - 工事希望日(min: 今日+21日)
-   *    - 同意/recaptchaで送信可否
-   *    - 送信時のバリデーション
-   * ----------------------------- */
-  (function contactForm() {
-    const form = $(".contact-form");
-    if (!form) return;
-
-    // (a) 工事希望日の min=今日+21日
-    (function setInstallMinDates() {
-      const ids = ["install-date-1", "install-date-2", "install-date-3"];
-      const d = new Date();
-      d.setDate(d.getDate() + 21);
-      const pad = (n) => String(n).padStart(2, "0");
-      const min = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(
-        d.getDate()
-      )}`;
-      ids.forEach((id) => {
-        const el = $("#" + id);
-        if (el) el.min = min;
-      });
-    })();
-
-    (function setInstallMinDates() {
-      const ids = ["survey-date-1", "survey-date-2", "survey-date-3"];
-      const d = new Date();
-      d.setDate(d.getDate() + 21);
-      const pad = (n) => String(n).padStart(2, "0");
-      const min = `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(
-        d.getDate()
-      )}`;
-      ids.forEach((id) => {
-        const el = $("#" + id);
-        if (el) el.min = min;
-      });
-    })();
-
-    // (b) 同意&reCAPTCHAで送信可否
-    const agree = $("#agree-terms");
-    const submitBtn = $('button[type="submit"]', form);
-    const captchaElm = $(".g-recaptcha", form);
-
-    function hasCaptchaOK() {
-      try {
-        return typeof grecaptcha !== "undefined"
-          ? grecaptcha.getResponse().length > 0
-          : true; // sitekey未設定や未読込時は通す
-      } catch {
-        return true;
-      }
-    }
-    function canSubmit() {
-      const okAgree = agree ? agree.checked : true;
-      const okCaptcha = hasCaptchaOK();
-      const enabled = okAgree && okCaptcha;
-      if (submitBtn) submitBtn.disabled = !enabled;
-      return enabled;
-    }
-
-    // reCAPTCHAコールバック（HTMLに data-callback="onRecaptchaSuccess" を付けていなくても監視で拾う）
-    window.onRecaptchaSuccess = canSubmit;
-
-    // reCAPTCHA応答の変化を監視（安全策）
-    if (captchaElm) {
-      const mo = new MutationObserver(canSubmit);
-      mo.observe(captchaElm, {
-        subtree: true,
-        childList: true,
-        attributes: true,
-      });
-      // 2秒おきの保険チェック（環境依存を吸収）
-      setInterval(canSubmit, 2000);
-    }
-
-    agree && agree.addEventListener("change", canSubmit);
-    canSubmit();
-
-    // (c) 送信時バリデーション
-    form.addEventListener("submit", (e) => {
-      // 同意/recaptchaで制御
-      if (!canSubmit()) {
-        e.preventDefault();
-        alert("送信前に規約へ同意し、reCAPTCHAを完了してください。");
-        return;
-      }
-      // ネイティブ検証
-      if (!form.reportValidity()) {
-        e.preventDefault();
-        // 最初の不正要素へスクロール
-        const invalid = form.querySelector(":invalid");
-        invalid &&
-          invalid.scrollIntoView({ behavior: "smooth", block: "center" });
-      }
-    });
-  })();
-
-  /* -----------------------------
-   * 5) 横スクロール防止の保険（ヒーローのみ）
-   *    ※ CSSで対策済みだが、念のためJSでも検知して調整
-   * ----------------------------- */
-  (function heroOverflowGuard() {
-    const hero = $(".hero");
-    if (!hero) return;
-    const check = () => {
-      // ほんのわずかなサブピクセルはCSSでclip/hidden済み
-      // ここでは大きなはみ出しのデバッグに使える
-      // （必要なら hero.style.overflowX = 'hidden' を強制）
-    };
-    window.addEventListener("resize", check, { passive: true });
-    check();
-  })();
+  // ===================== 9) First sync =====================
+  onScroll();
 })();
